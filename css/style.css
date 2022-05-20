@@ -3,6 +3,15 @@ body {
   font-size: 12px;
 }
 
+.heading {
+  font-weight: bold;
+}
+
+select {
+  padding: 2px 4px;
+  border-radius: 0;
+}
+
 table {
   border-collapse: collapse;
   border: 2px solid #eee;
@@ -85,7 +94,7 @@ label.disabled {
   z-index: 1;
   width: 390px;
   height: 125px;
-  padding: 60px 40px;
+  padding: 40px 20px 20px;
   background-color: #fff;
   text-align: center;
 }
@@ -93,12 +102,13 @@ label.disabled {
 .close {
   position: absolute;
   top: 0px;
-  right: 10px;
+  right: 14px;
   text-align: right;
+  cursor: pointer;
 }
 
 .fa-solid {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
 .text {
@@ -112,4 +122,8 @@ button {
   border: 0;
   color: #fff;
   cursor: pointer;
+}
+
+.u-mt16 {
+  margin-top: 32px;
 }
