@@ -129,45 +129,6 @@ Vue.createApp({
         })
       }
     },
-    // getTime() {
-    //   //時間軸作成
-    //   for (let i = 0; i < 18; i++) { 
-    //     let hour = this.times[i].hour;
-    //     let min = this.times[i].min;
-    //     let key = this.times[i].key;
-    //     if (i % 2 === 0) {
-    //       this.times.push({
-    //         hour: hour,
-    //         min: min + 30,
-    //         key: key + 1
-    //       })
-    //     } else if (i % 2 === 1) {
-    //       this.times.push({
-    //         hour: hour + 1,
-    //         min: min - 30,
-    //         key: key +  1
-    //       })
-    //     }
-    //   }
-    //   return this.times;      
-    // },
-    // getCalendar() {
-    //   //日付軸作成
-    //   this.dates.pop();
-    //   for (let i = 0; i < 7; i++) {
-    //     let date = addDays(startDate, i);
-    //     this.dates.push({
-    //       dateInfo: date,
-    //       year: date.getFullYear(),
-    //       month: date.getMonth() + 1,
-    //       dateNumber: date.getDate(),
-    //       day: format(date, 'EEE'),
-    //       dayNumber: date.getDay(),
-    //       status: isAfter(date, today) ? [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false] : [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
-    //     });
-    //   }
-    //   return this.dates;
-    // },
     getPrevCalendar(event) {
       //カレンダーを進める
       if (event.target.classList.contains('disabled')) {
