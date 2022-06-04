@@ -41,7 +41,8 @@ Vue.createApp({
           reserveDate: undefined,
           reserveTime: undefined,
         }
-      ]
+      ],
+      reserveInit: true
     }
   },
   beforeMount() {
@@ -49,9 +50,16 @@ Vue.createApp({
     let reserveInfo = JSON.parse(localStorage.getItem('reserveInfo'));
     if (reserveInfo === null) {
       let initReserveDate = addDays(today, 1);
-      reserveInfo = {
-        reserveInfo0: [initReserveDate.getFullYear(), initReserveDate.getMonth() + 1, initReserveDate.getDate(), '16:00', 0, initReserveDate.getDay(), 12, '1H']
-      };
+      let dayOfToday = today.getDay();
+      if (dayOfToday === 6) {
+        reserveInfo = {
+          reserveInfo0: [initReserveDate.getFullYear(), initReserveDate.getMonth() + 1, initReserveDate.getDate(), '16:00', 1, initReserveDate.getDay(), 12, '1H']
+        };
+      } else {
+        reserveInfo = {
+          reserveInfo0: [initReserveDate.getFullYear(), initReserveDate.getMonth() + 1, initReserveDate.getDate(), '16:00', 0, initReserveDate.getDay(), 12, '1H']
+        };       
+      }
       localStorage.setItem('reserveInfo', JSON.stringify(reserveInfo));
     }
   },
@@ -218,7 +226,6 @@ Vue.createApp({
           let reserveWeek = Math.floor(interval.days / 7);
           //新規予約データを一つの配列にまとめる
           addReserveInfo = [this.addReserve.reserveYear, this.addReserve.reserveMonth, this.addReserve.reserveDate, this.addReserve.reserveTime, reserveWeek, dayNumber, timeKey, this.plan];
-
           //表示を変更
           this.dates[dayNumber].status[timeKey] = true;
           if (this.plan === '2H') {
@@ -248,8 +255,10 @@ Vue.createApp({
       reserveInfo['reserveInfo' + reserveLength] = addReserveInfo;
       localStorage.setItem('reserveInfo', JSON.stringify(reserveInfo));
       addReserveInfo = [];
+      //表示を変更
       this.reserveAction = false;
+      this.reserveInit = false;
     }
   }
-}).mount('#calendar');
+}).mount('#reserveApp');
 

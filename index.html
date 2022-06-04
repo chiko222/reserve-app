@@ -2,63 +2,83 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Calendar</title> 
+  <title>Reserve App</title> 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://kit.fontawesome.com/f1693f3bfe.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div id="calendar">
-    <div>
-      <p class="heading">1.　プランを選択してください</p>
-      <select v-model="plan">     
-        <option value="">希望プラン</option>
-        <option value="1H">1時間</option>
-        <option value="2H">2時間</option>
-      </select>
-    </div>
-    <div class="u-mt16">
-      <p class="heading">2.　日時を選択してください</p>
-      <table>
-        <thead>
-          <tr>
-            <th id="prev" @click="getPrevCalendar" :class="{ disabled: prevDisabled }" rowspan="2">&laquo;</th>
-            <th id="title" colspan="7">{{ title }}</th>
-            <th id="next" @click="getNextCalendar" :class="{ disabled: nextDisabled }" rowspan="2">&raquo;</th>
-          </tr>
-          <tr>
-            <template  v-for="date in dates">
-              <th>
-              <span class="date">{{ date.dateNumber }}</span>
-              <span class="day">{{ date.day }}</span>
-              </th>
-            </template>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="time in times">
-            <tr>
-              <td class="time">{{ time.hour }}:{{ String(time.min).padStart(2, '0') }}</td>
-              <template v-for="date in dates">
-                <td>
-                  <input type="checkbox" id="reserve">
-                  <label for="reserve" v-if="date.status[time.key]" class="disabled" @click="reserve" :data-reservetime="`${time.hour}:${String(time.min).padStart(2, '0')}`" :data-year="date.year" :data-month="date.month" :data-datenumber="date.dateNumber" :data-daynumber="date.dayNumber" :data-timekey="time.key">×</label>
-                  <label for="reserve" v-else @click="reserve" :data-reservetime="`${time.hour}:${String(time.min).padStart(2, '0')}`" :data-year="date.year" :data-month="date.month" :data-datenumber="date.dateNumber" :data-daynumber="date.dayNumber" :data-timekey="time.key">◎</label>
-                </td> 
-              </template>
-              <td class="time">{{ time.hour }}:{{ String(time.min).padStart(2, '0') }}</td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-    </div>
-    <div class="confirm-wrapper" v-show="reserveAction">
-      <div class="confirm
-      ">
-        <p class="close" @click="cancel"><i class="fa-solid fa-circle-xmark"></i></p>
-        <p class="text">ご希望の日時は{{ addReserve.reserveYear }}年{{ addReserve.reserveMonth }}月{{ addReserve.reserveDate }}日{{ addReserve.reserveTime }}でよろしいですか？</p>
-        <button type="submit" @click="getReserve">予約する</button>
+  <div id="reserveApp">
+    <h1>
+      Reserve App
+    </h1>
+    <transition name="fade">
+      <div v-if="reserveInit">
+        <section>
+          <p class="heading">1.　プランを選択してください</p>
+          <div class="plan__wrapper">
+            <select class="plan" v-model="plan">     
+              <option value="">希望プラン</option>
+              <option value="1H">1時間</option>
+              <option value="2H">2時間</option>
+          </select>
+          </div>
+        </section>
+        <section class="u-mt16">
+          <p class="heading">2.　日時を選択してください</p>
+          <div class="calendar">
+            <table>
+              <thead>
+                <tr class="monthRow">
+                  <th id="prev" @click="getPrevCalendar" :class="{ disabled: prevDisabled }" rowspan="2">&laquo;</th>
+                  <th id="title" colspan="7">{{ title }}</th>
+                  <th id="next" @click="getNextCalendar" :class="{ disabled: nextDisabled }" rowspan="2">&raquo;</th>
+                </tr>
+                <tr class="dateRow">
+                  <template  v-for="date in dates">
+                    <th>
+                      <span class="date">{{ date.dateNumber }}</span>
+                      <span class="day">{{ date.day }}</span>
+                    </th>
+                  </template>
+                </tr>
+              </thead>
+              <tbody>
+                <template v-for="time in times">
+                  <tr>
+                    <td class="time">{{ time.hour }}:{{ String(time.min).padStart(2, '0') }}</td>
+                    <template v-for="date in dates">
+                      <td class="content">
+                        <input type="checkbox" id="reserve">
+                        <label for="reserve" v-if="date.status[time.key]" class="disabled" @click="reserve" :data-reservetime="`${time.hour}:${String(time.min).padStart(2, '0')}`" :data-year="date.year" :data-month="date.month" :data-datenumber="date.dateNumber" :data-daynumber="date.dayNumber" :data-timekey="time.key">×</label>
+                        <label for="reserve" v-else @click="reserve" :data-reservetime="`${time.hour}:${String(time.min).padStart(2, '0')}`" :data-year="date.year" :data-month="date.month" :data-datenumber="date.dateNumber" :data-daynumber="date.dayNumber" :data-timekey="time.key">◎</label>
+                      </td> 
+                    </template>
+                    <td class="time">{{ time.hour }}:{{ String(time.min).padStart(2, '0') }}</td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <transition name="fade">
+          <div class="confirm__wrapper" v-show="reserveAction">
+            <transition name="fade">
+              <div class="confirm">
+                <p class="close" @click="cancel"><i class="fa-solid fa-circle-xmark"></i></p>
+                <p class="text">ご希望の日時は{{ addReserve.reserveYear }}年{{ addReserve.reserveMonth }}月{{ addReserve.reserveDate }}日{{ addReserve.reserveTime }}でよろしいですか？</p>
+                <button type="button" @click="getReserve">予約する</button>
+              </div>
+            </transition>
+          </div>
+        </transition>
       </div>
-    </div>
+      <div v-else>  
+        <p class="closing">ご予約を承りました！</p>    
+      </div>
+    </transition>
   </div>
   <script src="https://unpkg.com/vue@next"></script>
   <script src="dist/date.js"></script>

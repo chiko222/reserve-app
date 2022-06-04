@@ -1,57 +1,133 @@
+:root {
+  --font-family-jp: 'Noto Sans JP', sans-serif;
+  --font-family-en: 'Montserrat', sans-serif;
+}
+
+/*
+base
+------------------------------ */
+
+html {
+  font-size: 62.5%;
+}
+
 body {
-  font-family: sans-serif;
-  font-size: 12px;
+  background-color: #F8F8F8;
+  font-family: var(--font-family-jp);
+  font-size: 1.4rem;
+  color: #555555;
+}
+
+/*
+layout
+------------------------------ */
+
+h1 {
+  text-align: center;
+  font-family: var(--font-family-en);
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(92, 46, 248, 0.4);
+  text-shadow: 2px 3px 4px #F8F8F8, 0 0 #AAAAAA;
+}
+
+section {
+  width: min(90%, 58rem);
+  margin: 0 auto;
 }
 
 .heading {
-  font-weight: bold;
+  font-weight: 500;
 }
 
-select {
-  padding: 2px 4px;
-  border-radius: 0;
+.plan__wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.plan__wrapper::after {
+  position: absolute;
+  top: 0.9rem;
+  right: 1.2rem;
+  content: '\f107';
+  font-family: "Font Awesome 5 Free";
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.plan {
+  appearance: none;
+  padding: 0.8rem 4.8rem 0.8rem 1.2rem;
+  border: none;
+  border-radius: 1.6rem;
+  box-shadow: 2px 2px 4px #CFCFCF inset;
+}
+
+.calendar {
+  width: min(100%, 58rem);
+  padding-bottom: 2.0rem;
+  border-radius: 40px;
+  box-shadow: 4px 2px 10px #E7E7E7, 6px 4px 8px #FFFFFF inset;
+  overflow: hidden;
 }
 
 table {
+  width: 100%;
   border-collapse: collapse;
-  border: 2px solid #eee;
+  font-family: var(--font-family-en);
 }
 
 thead {
-  background: #eee;
+  background-color: #C6B6FD;
+  box-shadow: 4px 4px 8px rgba(256, 256, 256, 0.5) inset;
+  border-radius: 40px 40px 0 0;
 }
 
-th,
-td {
-  padding: 4px 8px;
-  text-align: center;
+.monthRow th {
+  padding-top: 2.0rem;
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
-thead th span {
+.dateRow th {
+  padding-top: 1.6rem;
+  padding-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.date {
+  font-size: 2.2rem;
+}
+
+.date,
+.day {
   display: block;
-}
-
-.time {
-  padding-right: 20px;
-  padding-left: 20px;
 }
 
 #prev,
 #next
  {
-  font-size: 16px;
+  font-size: 2.4rem;
   cursor: pointer;
 }
 
 #prev.disabled,
 #next.disabled {
-  color: #bbb;
+  color: transparent;
   cursor: auto;
 }
 
-.reserve {
-  color: red;
-  cursor: pointer;
+td {
+  padding-top: 1.2rem;
+  text-align: center;
+}
+
+.time {
+  width: 15%;
+}
+
+.content {
+  width: 10%;
 }
 
 input[type="checkbox"] {
@@ -60,7 +136,7 @@ input[type="checkbox"] {
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
-  *font-size: 100%;
+  font-size: 100%;
   border-radius: 0;
   border: none;
   appearance: none;
@@ -69,7 +145,7 @@ input[type="checkbox"] {
 }
 
 label {
-  color: red;
+  color: #FF368B;
   cursor: pointer;
 }
 
@@ -78,7 +154,21 @@ label.disabled {
   cursor: auto;
 }
 
-.confirm-wrapper {
+/*
+action
+------------------------------ */
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.confirm__wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -90,38 +180,56 @@ label.disabled {
 .confirm {
   position: fixed;
   top: 20%;
-  left: calc((100% - 450px) / 2);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
-  width: 390px;
-  height: 125px;
-  padding: 40px 20px 20px;
-  background-color: #fff;
+  width: min(90%, 390px);
+  height: 12.5rem;
+  padding: 4rem 2rem 2rem;
+  background-color: #F8F8F8;
   text-align: center;
+  border-radius: 20px;
 }
 
 .close {
   position: absolute;
-  top: 0px;
-  right: 14px;
+  top: 0.2rem;
+  right: 2.0rem;
   text-align: right;
   cursor: pointer;
 }
 
 .fa-solid {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .text {
-  margin-bottom: 30px;
-  font-size: 14px;
+  margin-bottom: 3rem;
 }
 
 button {
-  padding: 4px 12px;
-  background-color: #000;
-  border: 0;
+  padding: 0.8rem 1.8rem;
+  background-color: #C6B6FD;
+  border: none;
+  border-radius: 2.0rem;
+  font-family: inherit;
+  font-weight: 500;
   color: #fff;
+  box-shadow: 0 3px 3px #CFCFCF, 0 2px 3px rgba(256, 256, 256, 0.4) inset;
   cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.closing {
+  padding-top: 2.8rem;
+  text-align: center;
+  font-size: 2.0rem;
+  overflow: hidden;
 }
 
 .u-mt16 {
